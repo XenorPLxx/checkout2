@@ -1,0 +1,2 @@
+class ProductRule
+end
