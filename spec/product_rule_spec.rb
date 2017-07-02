@@ -9,8 +9,8 @@ describe ProductRule do
       Product.new("B", 30)
       Product.new("C", 20)
       Product.new("D", 15)
-      pr1 = ProductRule.new("A", 3, 130)
-      pr2 = ProductRule.new("B", 2, 45)
+      ProductRule.new("A", 3, 130)
+      ProductRule.new("B", 2, 45)
     end
   end
 

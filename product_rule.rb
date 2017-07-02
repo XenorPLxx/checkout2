@@ -1,3 +1,5 @@
+require_relative 'product'
+
 class ProductRule
   attr_accessor :name, :count, :price
   @@all = []

@@ -10,8 +10,8 @@ describe CheckOut do
       Product.new("B", 30)
       Product.new("C", 20)
       Product.new("D", 15)
-      pr1 = ProductRule.new("A", 3, 130)
-      pr2 = ProductRule.new("B", 2, 45)
+      ProductRule.new("A", 3, 130)
+      ProductRule.new("B", 2, 45)
     end
   end
 
@@ -28,20 +28,22 @@ describe CheckOut do
   it "stores info about scanned products" do
     co = CheckOut.new
     co.scan("A")
-    expect(co.products).to be Array.new(Product.find("A"))
+    arr = Array.new
+
+    expect(co.products).to eq Array.new << Product.find("A")
   end
 
   it "accepts special product rule" do
-    expect(CheckOut.new(pr1)).to be
+    expect(CheckOut.new(ProductRule.find("A", 3))).to be
   end
 
   it "accepts special product rules array" do
-    expect(CheckOut.new([pr1, pr2])).to be
+    expect(CheckOut.new([ProductRule.find("A", 3), ProductRule.find("B", 2)])).to be
   end
 
   it "sums total price" do
     co = CheckOut.new
-    expect(co.total).to be type(Integer)
+    expect(co.total).to be 0
   end
 
   it "sums correct total with rules" do
