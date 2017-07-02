@@ -1,4 +1,3 @@
-require 'config'
 require_relative '../product_rule'
 require_relative '../product'
 
@@ -12,25 +11,25 @@ describe ProductRule do
   end
 
   it "initializes with only with valid product, count and price" do
-    ProductRule.new.should_not be
-    ProductRule.new("C", "A", "A").should_not be
-    ProductRule.new("E", 3, 130).should_not be
-    ProductRule.new("A", 3, 130).should be
+    expect{ProductRule.new}.to_raise error
+    expect{ProductRule.new("C", "A", "A")}.to_raise error
+    expect{ProductRule.new("E", 3, 130)}.to_raise error
+    expect(ProductRule.new("A", 3, 130)).to be
   end
 
   it "is unique for product count" do
-    ProductRule.new("A", 3, 130).should be
-    ProductRule.new("A", 2, 90).should be
-    ProductRule.new("A", 3, 140).should_not be
+    expect(ProductRule.new("A", 3, 130)).to be
+    expect(ProductRule.new("A", 2, 90)).to be
+    expect{ProductRule.new("A", 3, 140)}.to_raise error
   end
 
   it "finds best rule by product name and count" do
     pr1 = ProductRule.new("A", 3, 130)
     pr2 = ProductRule.new("A", 2, 90)
-    ProductRule.find("A", 5).should be pr1
-    ProductRule.find("A", 3).should be pr1
-    ProductRule.find("A", 2).should be pr2
-    ProductRule.find("A", 1).should_not be
+    expect(ProductRule.find("A", 5)).to be pr1
+    expect(ProductRule.find("A", 3)).to be pr1
+    expect(ProductRule.find("A", 2)).to be pr2
+    expect(ProductRule.find("A", 1)).to_not be
   end
 
 end
