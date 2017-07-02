@@ -10,27 +10,36 @@ class CheckOut
       @product_rules = []
       @product_rules << product_rules
     end
-    @products = []
+    @products = {}
   end
 
   def scan(name)
     p = Product.find(name)
     if p
-      @products << Product.find(name)
-      puts "Product #{p.name} scanned, price: #{p.price}!"
+      if @products[name]
+        @products[name] += 1
+      else
+        @products[name] = 1
+      end
+      # puts "Product #{p.name} scanned, price: #{p.price}!"
       true
     else
-      puts "Invalid product!"
+      # puts "Invalid product!"
       false
     end
   end
 
   def total
     sum = 0
+    puts
+    puts @products.inspect
     @products.each do |product|
-      sum += product.price
+      if ProductRule.find_best
+      end
+      sum += Product.find(product[0]).price
     end
     puts "Total price is #{sum}"
+    puts
     sum
   end
 

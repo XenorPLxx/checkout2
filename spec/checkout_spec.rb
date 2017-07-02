@@ -28,9 +28,9 @@ describe CheckOut do
   it "stores info about scanned products" do
     co = CheckOut.new
     co.scan("A")
-    arr = Array.new
-
-    expect(co.products).to eq Array.new << Product.find("A")
+    hash = Hash.new
+    hash["A"] = 1
+    expect(co.products).to eq hash
   end
 
   it "accepts special product rule" do

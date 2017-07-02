@@ -35,4 +35,14 @@ describe ProductRule do
     expect(ProductRule.find_best("A", 1)).to_not be
   end
 
+  it "finds best rule by product name and count for rules array" do
+    arr = []
+    arr << ProductRule.new("A", 5, 160)
+    arr << ProductRule.new("A", 4, 160)
+    expect(ProductRule.find_best("A", 6, arr)).to be ProductRule.find("A", 5)
+    expect(ProductRule.find_best("A", 4, arr)).to be ProductRule.find("A", 4)
+    expect(ProductRule.find_best("A", 2, arr)).to_not be
+    expect(ProductRule.find_best("A", 1, arr)).to_not be
+  end
+
 end

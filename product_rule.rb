@@ -32,9 +32,9 @@ class ProductRule
     found
   end
 
-  def self.find_best(name, count)
+  def self.find_best(name, count, array = @@all)
     found = nil
-    @@all.each do |product_rule|
+    array.each do |product_rule|
       if product_rule.name == name and product_rule.count <= count
         if (!found.nil? and found.count < product_rule.count) or found.nil?
           found = product_rule
