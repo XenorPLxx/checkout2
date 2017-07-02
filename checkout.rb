@@ -31,13 +31,13 @@ class CheckOut
 
   def total
     sum = 0
-    puts
-    puts "Products scanned in this CheckOut: #{@products.inspect}"
+    # puts
+    # puts "Products scanned in this CheckOut: #{@products.inspect}"
     @products.each do |product|
       product_count = product[1]
       while product_count > 0
         if best = ProductRule.find_best(product[0], product_count, @product_rules)
-          puts "Found ProductRule for Product '#{product[0]}', count = #{best.count} with price #{best.price}"
+          # puts "Found ProductRule for Product '#{product[0]}', count = #{best.count} with price #{best.price}"
           while product_count >= best.count
             sum += best.price
             product_count -= best.count
@@ -48,8 +48,8 @@ class CheckOut
         end
       end
     end
-    puts "Total price is #{sum}"
-    puts
+    # puts "Total price is #{sum}"
+    # puts
     sum
   end
 
