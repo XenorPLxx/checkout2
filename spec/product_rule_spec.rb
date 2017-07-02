@@ -15,34 +15,40 @@ describe ProductRule do
   end
 
   it "initializes with only with valid product, count and price" do
+    Product.new("Y", 90)
     expect{ProductRule.new}.to raise_error ArgumentError
     expect{ProductRule.new("C", "A", "A")}.to raise_error ArgumentError
     expect{ProductRule.new("E", 3, 130)}.to raise_error RuntimeError
-    expect(ProductRule.new("D", 3, 130)).to be
+    expect(ProductRule.new("Y", 3, 130)).to be
   end
 
   it "is unique for product count" do
-    expect(ProductRule.new("C", 3, 130)).to be
-    expect(ProductRule.new("C", 2, 90)).to be
-    expect{ProductRule.new("C", 3, 140)}.to raise_error RuntimeError
+    Product.new("T", 90)
+    expect(ProductRule.new("T", 3, 130)).to be
+    expect(ProductRule.new("T", 2, 90)).to be
+    expect{ProductRule.new("T", 3, 140)}.to raise_error RuntimeError
   end
 
   it "finds best rule by product name and count" do
-    ProductRule.new("A", 2, 90)
-    expect(ProductRule.find_best("A", 5)).to be ProductRule.find("A", 3)
-    expect(ProductRule.find_best("A", 3)).to be ProductRule.find("A", 3)
-    expect(ProductRule.find_best("A", 2)).to be ProductRule.find("A", 2)
-    expect(ProductRule.find_best("A", 1)).to_not be
+    Product.new("Z", 50)
+    ProductRule.new("Z", 2, 90)
+    ProductRule.new("Z", 3, 140)
+    expect(ProductRule.find_best("Z", 5)).to be ProductRule.find("Z", 3)
+    expect(ProductRule.find_best("Z", 3)).to be ProductRule.find("Z", 3)
+    expect(ProductRule.find_best("Z", 2)).to be ProductRule.find("Z", 2)
+    expect(ProductRule.find_best("Z", 1)).to_not be
   end
 
   it "finds best rule by product name and count for rules array" do
+    Product.new("X", 50)
     arr = []
-    arr << ProductRule.new("A", 5, 160)
-    arr << ProductRule.new("A", 4, 160)
-    expect(ProductRule.find_best("A", 6, arr)).to be ProductRule.find("A", 5)
-    expect(ProductRule.find_best("A", 4, arr)).to be ProductRule.find("A", 4)
-    expect(ProductRule.find_best("A", 2, arr)).to_not be
-    expect(ProductRule.find_best("A", 1, arr)).to_not be
+    arr << ProductRule.new("X", 5, 160)
+    arr << ProductRule.new("X", 4, 160)
+    ProductRule.new("X", 3, 10)
+    expect(ProductRule.find_best("X", 6, arr)).to be ProductRule.find("X", 5)
+    expect(ProductRule.find_best("X", 4, arr)).to be ProductRule.find("X", 4)
+    expect(ProductRule.find_best("X", 2, arr)).to_not be
+    expect(ProductRule.find_best("X", 1, arr)).to_not be
   end
 
 end

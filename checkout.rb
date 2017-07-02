@@ -32,11 +32,21 @@ class CheckOut
   def total
     sum = 0
     puts
-    puts @products.inspect
+    puts "Products scanned in this CheckOut: #{@products.inspect}"
     @products.each do |product|
-      if ProductRule.find_best
+      product_count = product[1]
+      while product_count > 0
+        if best = ProductRule.find_best(product[0], product_count, @product_rules)
+          puts "Found ProductRule for Product '#{product[0]}', count = #{best.count} with price #{best.price}"
+          while product_count >= best.count
+            sum += best.price
+            product_count -= best.count
+          end
+        else
+          sum += Product.find(product[0]).price * product_count
+          product_count = 0
+        end
       end
-      sum += Product.find(product[0]).price
     end
     puts "Total price is #{sum}"
     puts

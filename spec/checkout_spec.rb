@@ -111,7 +111,7 @@ describe CheckOut do
     co.scan("A")
     co.scan("B")
     co.scan("B")
-    expect(co.total).to eq 178
+    expect(co.total).to eq 175
 
     co = CheckOut.new(ProductRule.all)
     co.scan("A")
