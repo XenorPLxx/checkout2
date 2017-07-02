@@ -1,5 +1,5 @@
+require 'config'
 require_relative '../product'
-
 describe Product do
 
   it "initializes with only with valid name and price" do

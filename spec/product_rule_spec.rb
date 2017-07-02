@@ -1,3 +1,4 @@
+require 'config'
 require_relative '../product_rule'
 require_relative '../product'
 
