@@ -5,10 +5,12 @@ require_relative '../product'
 describe CheckOut do
 
   before(:each) do
-    Product.new("A", 50)
-    Product.new("B", 30)
-    Product.new("C", 20)
-    Product.new("D", 15)
+    unless Product.find("A")
+      Product.new("A", 50)
+      Product.new("B", 30)
+      Product.new("C", 20)
+      Product.new("D", 15)
+    end
   end
 
   it "accepts valid products for scanning" do
