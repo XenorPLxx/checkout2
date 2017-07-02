@@ -6,9 +6,7 @@ class Product
     if Product.find(name)
       raise "Product already exists!"
     end
-    if price.class != Integer
-      raise "Invalid price!"
-    end
+    raise ArgumentError.new "Invalid price!" if price.class != Integer
     @name = name
     @price = price
     @@all << self

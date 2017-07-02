@@ -3,35 +3,36 @@ require_relative '../product'
 
 describe ProductRule do
 
-  before(:each) do
+  before(:all) do
     unless Product.find("A")
       Product.new("A", 50)
       Product.new("B", 30)
       Product.new("C", 20)
       Product.new("D", 15)
+      pr1 = ProductRule.new("A", 3, 130)
+      pr2 = ProductRule.new("B", 2, 45)
     end
   end
 
   it "initializes with only with valid product, count and price" do
-    expect{ProductRule.new}.to_raise error
-    expect{ProductRule.new("C", "A", "A")}.to_raise error
-    expect{ProductRule.new("E", 3, 130)}.to_raise error
-    expect(ProductRule.new("A", 3, 130)).to be
+    expect{ProductRule.new}.to raise_error ArgumentError
+    expect{ProductRule.new("C", "A", "A")}.to raise_error ArgumentError
+    expect{ProductRule.new("E", 3, 130)}.to raise_error RuntimeError
+    expect(ProductRule.new("D", 3, 130)).to be
   end
 
   it "is unique for product count" do
-    expect(ProductRule.new("A", 3, 130)).to be
-    expect(ProductRule.new("A", 2, 90)).to be
-    expect{ProductRule.new("A", 3, 140)}.to_raise error
+    expect(ProductRule.new("C", 3, 130)).to be
+    expect(ProductRule.new("C", 2, 90)).to be
+    expect{ProductRule.new("C", 3, 140)}.to raise_error RuntimeError
   end
 
   it "finds best rule by product name and count" do
-    pr1 = ProductRule.new("A", 3, 130)
-    pr2 = ProductRule.new("A", 2, 90)
-    expect(ProductRule.find("A", 5)).to be pr1
-    expect(ProductRule.find("A", 3)).to be pr1
-    expect(ProductRule.find("A", 2)).to be pr2
-    expect(ProductRule.find("A", 1)).to_not be
+    ProductRule.new("A", 2, 90)
+    expect(ProductRule.find_best("A", 5)).to be ProductRule.find("A", 3)
+    expect(ProductRule.find_best("A", 3)).to be ProductRule.find("A", 3)
+    expect(ProductRule.find_best("A", 2)).to be ProductRule.find("A", 2)
+    expect(ProductRule.find_best("A", 1)).to_not be
   end
 
 end

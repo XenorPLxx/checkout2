@@ -4,12 +4,14 @@ require_relative '../product'
 
 describe CheckOut do
 
-  before(:each) do
+  before(:all) do
     unless Product.find("A")
       Product.new("A", 50)
       Product.new("B", 30)
       Product.new("C", 20)
       Product.new("D", 15)
+      pr1 = ProductRule.new("A", 3, 130)
+      pr2 = ProductRule.new("B", 2, 45)
     end
   end
 
@@ -30,13 +32,10 @@ describe CheckOut do
   end
 
   it "accepts special product rule" do
-    pr = ProductRule.new("A", 3, 130)
-    expect(CheckOut.new(pr)).to be
+    expect(CheckOut.new(pr1)).to be
   end
 
   it "accepts special product rules array" do
-    pr1 = ProductRule.new("A", 3, 130)
-    pr2 = ProductRule.new("B", 2, 45)
     expect(CheckOut.new([pr1, pr2])).to be
   end
 
@@ -46,8 +45,6 @@ describe CheckOut do
   end
 
   it "sums correct total with rules" do
-    pr1 = ProductRule.new("A", 3, 130)
-    pr2 = ProductRule.new("B", 2, 45)
 
     co = CheckOut.new(ProductRule.all)
     expect(co.total).to eq 0
